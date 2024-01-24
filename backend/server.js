@@ -5,6 +5,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 //const workoutRoutes = require('./routes/workouts');
 
+const messageRoutes = require('./routes/messages');
+
 // express app
 const app = express();
 
@@ -17,26 +19,24 @@ app.use((req, res, next) => {
 });
 
 // routes
-app.get('/', (req, res) => {
-  res.json({mssg: 'Welcome to the app'})
-})
+// app.get('/', (req, res) => {
+//   res.json({mssg: 'Welcome to the app'})
+// })
 
-app.listen(process.env.PORT, () => {
-  console.log('Listening on port ' + process.env.PORT);
-});
+app.use('/messages', messageRoutes);
 
 // routes
 //app.use('/api/workouts', workoutRoutes);
 
 // connect to db
-// mongoose.connect(process.env.MONGO_URI)
-//   .then(() => {
-//     // listen for requests
-//     app.listen(process.env.PORT, () => {
-//       console.log('Connected to DB');
-//       console.log(`Listening on port ${process.env.PORT}!`);
-//     });
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//   });
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    // listen for requests
+    app.listen(process.env.PORT, () => {
+      console.log('Connected to DB');
+      console.log(`Listening on port ${process.env.PORT}!`);
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });

@@ -19,8 +19,8 @@ app.use((req, res, next) => {
 });
 
 // routes
-app.use('/messages', messageRoutes);
-app.use('/user', userRoutes);
+app.use('/api/messages', messageRoutes);
+app.use('/api/user', userRoutes);
 
 // connect to db
 mongoose.connect(process.env.MONGO_URI)

@@ -1,5 +1,6 @@
 const User = require('../models/UserModel');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 
 const createToken = (_id) => {
   return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' });
@@ -50,7 +51,26 @@ const signupUser = async (req, res) => {
   }
 }
 
+const getUser = async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const user = await User.findOne({ username: username }).populate('friends');
+
+    if (!user) {
+      return res.status(404).json({ error: 'No such user' });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error fetching user:', error.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
 module.exports = {
   loginUser,
-  signupUser
+  signupUser,
+  getUser
 }

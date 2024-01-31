@@ -13,6 +13,8 @@ const userSchema = new Schema({
   profilePicture: { type: String },
   friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }]
+}, {
+  toJSON: { virtuals: true }
 });
 
 // virtual field for the full name

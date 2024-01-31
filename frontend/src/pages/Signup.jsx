@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -10,11 +10,13 @@ const Signup = () => {
   const [username, setUsername] = useState('');
   const [profilePicture, setProfilePicture] = useState('');
   const { signup, loading, error } = useSignup();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     await signup(firstName, lastName, username, email, password, profilePicture);
+    navigate('/messages');
   }
 
   return (

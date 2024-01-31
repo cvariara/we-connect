@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -34,6 +35,10 @@ const Login = () => {
       </div>
 
       <button disabled={loading}>Log in</button>
+      <p>
+        New to WeConnect?
+        <Link to="/signup">Sign up now</Link>!
+      </p>
       {error && <div className="error">
         {error}
       </div>}

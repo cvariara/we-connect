@@ -14,8 +14,12 @@ function App() {
     <div className='App'>
       <BrowserRouter>
         {user && <Navbar />}
-        {!user && <Home />}
+        {/* {!user && <Home />} */}
         <Routes>
+          <Route 
+            path='/'
+            element={<Home />}
+          />
           <Route 
             path='/login' 
             element={<Login />} 

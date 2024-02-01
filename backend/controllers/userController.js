@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 
 const createToken = (_id) => {
-  return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' });
+  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: '3d' });
 }
 
 // login user
@@ -55,7 +55,7 @@ const getUser = async (req, res) => {
   const { username } = req.params;
 
   try {
-    const user = await User.findOne({ username: username }).populate('friends');
+    const user = await User.findOne({ username: username }).populate('friends').select('-email -password');
 
     if (!user) {
       return res.status(404).json({ error: 'No such user' });
@@ -63,11 +63,9 @@ const getUser = async (req, res) => {
 
     res.status(200).json(user);
   } catch (error) {
-    console.error('Error fetching user:', error.message);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(400).json({ error: error.message });
   }
 };
-
 
 module.exports = {
   loginUser,

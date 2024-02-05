@@ -13,11 +13,12 @@ import Profile from './pages/Profile';
 function App() {
   const { user } = useAuthContext();
   const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        setLoading(true);
         const response = await fetch(`http://localhost:4000/api/user/profile/${user.username}`);
         const json = await response.json();
 
@@ -41,7 +42,6 @@ function App() {
   }, [user]);
 
   if (loading) {
-    // Update to loading spinner later
     return  (
       <div className="loading">
         <RotatingLines

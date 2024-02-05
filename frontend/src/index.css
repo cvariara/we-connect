@@ -90,6 +90,11 @@ input.error {
   border: 1px solid #e7195a;
 }
 
+.loading {
+  max-width: fit-content;
+  margin: 5rem auto;
+}
+
 .messages-container {
   padding: 2rem;
 }
@@ -97,6 +102,40 @@ input.error {
 .profile-picture-sm {
   border: 1px solid black;
   border-radius: 50%;
-  height: 60px;
-  width: 60px;
+  height: 4rem;
+  width: 4rem;
+}
+
+.profile-picture-lg {
+  border: 1px solid black;
+  border-radius: 50%;
+  height: 8rem;
+  width: 8rem;
+}
+
+.profile-container {
+  max-width: 800px;
+  margin: 4rem auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.return {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: .75rem;
 }

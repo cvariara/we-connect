@@ -4,12 +4,10 @@ import { useAuthContext } from "../hooks/useAuthContext";
 
 const Navbar = ({ userData }) => {
   const { logout } = useLogout();
-  //const { user } = useAuthContext();
 
   const handleClick = () => {
     logout();
   }
-  //console.log('userData in Navbar', userData)
 
   return (
     <header>

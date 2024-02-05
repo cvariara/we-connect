@@ -1,22 +1,108 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { useLogout } from "../hooks/useLogout";
+import { RotatingLines } from "react-loader-spinner";
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
-const Profile = ({ userData }) => {
-  //console.log('userData in Profile', userData);
-  if (!userData) {
-    return <p>Loading...</p>
+const Profile = () => {
+  const { user } = useAuthContext();
+  const { id } = useParams();
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [userFound, setUserFound] = useState(true);
+  const { logout } = useLogout();
+
+  const handleClick = () => {
+    logout();
+  }
+
+  // pull user info from backend with 'id'
+  // fetch with 'id'
+  // if user.username === fetched username id
+  //   its your profile you're viewing
+  //   show logout and friends lit
+  // else:
+  //  its different profile your viewing
+  //  if user is not on your friends list:
+  //    show add friends button
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(`http://localhost:4000/api/user/profile/${id}`);
+        const json = await response.json();
+
+        if (response.ok) {
+          setUserData(json);
+        } else {
+          console.error("Failed to fetch user profile");
+          setUserFound(false);
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error.message);
+        setUserFound(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    // Ensure user.username is present before making the fetch request
+    if (user && user.username) {
+      fetchUserData();
+    }
+  }, [user]);
+
+  if (loading) {
+    // Update to loading spinner later
+    return  (
+      <div className="loading">
+        <RotatingLines
+          visible={true}
+          height="96"
+          width="96"
+          strokeColor="grey"
+          strokeWidth="5"
+          animationDuration=".75"
+          ariaLabel="rotating-lines-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />
+      </div>
+    )
+  }
+
+  if (!userFound) {
+    return (
+      <div className="user-not-found">
+        <h2>Sorry, this page isn't available.</h2>
+        <p>
+          The link you followed may be broken, or the page may be removed.
+          <Link to='/messages'>Go back to Messages.</Link>
+        </p>
+      </div>
+    )
   }
 
   return (
     <div className="profile-container">
+      <Link to='/messages'>
+        <div className="return">
+          <KeyboardBackspaceIcon />
+          <span>Return to Messages</span>
+        </div>
+      </Link>
       <img src={userData.profilePicture} className="profile-picture-lg" />
       <div className="profile-user-info">
         <span className="profile-user-name">{userData.fullName}</span>
         <span className="profile-user-username">{userData.username}</span>
       </div>
-      <div className="profile-logout"></div>
+      {userData.username === user.username && (
+        <div className="profile-logout">
+          <button className="logout" onClick={handleClick}>Log out</button>
+        </div>
+      )}
       <div className="profile-friends">
-
+        
       </div>
     </div>
   );

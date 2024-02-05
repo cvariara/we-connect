@@ -9,6 +9,7 @@ import Signup from './pages/signup';
 import Home from './pages/Home';
 import Messages from './pages/Messages';
 import Profile from './pages/Profile';
+import FriendsList from './pages/FriendsList';
 
 function App() {
   const { user } = useAuthContext();
@@ -65,7 +66,7 @@ function App() {
         <Routes>
           <Route 
             path='/'
-            element={!user ? <Home /> : <Navigate to='/profile/:id' />}
+            element={!user ? <Home /> : <Navigate to='/:id/profile' />}
           />
           <Route 
             path='/login' 
@@ -76,12 +77,16 @@ function App() {
             element={!user ? <Signup /> : <Navigate to='/messages' />} 
           />
           <Route
-            path='/profile/:id'
-            element={user ? <Profile /> : <Navigate to='/login' />}
-          />
-          <Route
             path='/messages'
             element={user ? <Messages userData={userData} /> : <Navigate to='/login' />}
+          />
+          <Route
+            path='/:id/profile'
+            element={<Profile />}
+          />
+          <Route 
+            path='/:id/friends'
+            element={<FriendsList />}
           />
         </Routes>
       </BrowserRouter>

@@ -17,15 +17,6 @@ const Profile = () => {
     logout();
   }
 
-  // pull user info from backend with 'id'
-  // fetch with 'id'
-  // if user.username === fetched username id
-  //   its your profile you're viewing
-  //   show logout and friends lit
-  // else:
-  //  its different profile your viewing
-  //  if user is not on your friends list:
-  //    show add friends button
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -47,10 +38,10 @@ const Profile = () => {
     };
 
     // Ensure user.username is present before making the fetch request
-    if (user && user.username) {
+    if (user && user.username && id) {
       fetchUserData();
     }
-  }, [user]);
+  }, [user, id]);
 
   if (loading) {
     // Update to loading spinner later
@@ -96,14 +87,16 @@ const Profile = () => {
         <span className="profile-user-name">{userData.fullName}</span>
         <span className="profile-user-username">{userData.username}</span>
       </div>
+      <div className="profile-friends">
+        <Link to={`/${userData.username}/friends`}>
+          <h3>Friends List</h3>
+        </Link>
+      </div>
       {userData.username === user.username && (
         <div className="profile-logout">
           <button className="logout" onClick={handleClick}>Log out</button>
         </div>
       )}
-      <div className="profile-friends">
-        
-      </div>
     </div>
   );
 }

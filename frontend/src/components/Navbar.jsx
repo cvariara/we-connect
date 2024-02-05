@@ -13,7 +13,7 @@ const Navbar = ({ userData }) => {
     <header>
       <div className="container">
         <nav>
-          <Link to={`/profile/${userData.username}`}>
+          <Link to={`/${userData.username}/profile`}>
             <img className="profile-picture-sm" src={userData.profilePicture} alt="" />
             <span>{userData.username}</span>
           </Link>

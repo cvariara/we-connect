@@ -67,8 +67,57 @@ const getUser = async (req, res) => {
   }
 };
 
+const getUsersFriends = async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    // Find the user by username and populate the 'friends' field
+    const user = await User.findOne({ username }).populate('friends', 'firstName lastName username profilePicture');
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(200).json(user.friends);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
+const addFriends = async (req, res) => {
+  try {
+    const { username } = req.params;
+    const { friendUsername } = req.body;
+
+    const [user, friend] = await Promise.all([
+      User.findOne({ username }),
+      User.findOne({ username: friendUsername })
+    ]);
+
+    if (!user || !friend) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Check if the friend is not already in the friends list
+    if (!user.friends.includes(friend._id)) {
+      user.friends.push(friend._id);
+      friend.friends.push(user._id);
+      await user.save();
+
+      res.status(200).json({ message: 'Friend added successfully' });
+    } else {
+      res.status(400).json({ error: 'User is already a friend' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
 module.exports = {
   loginUser,
   signupUser,
-  getUser
+  getUser,
+  getUsersFriends,
+  addFriends
 }

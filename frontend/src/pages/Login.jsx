@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { login, loading, error } = useLogin();
+  const { login, error, loading } = useLogin();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -42,9 +42,7 @@ const Login = () => {
         New to WeConnect?
         <Link to="/signup">Sign up now</Link>!
       </p>
-      {error && <div className="error">
-        {error}
-      </div>}
+      {error && <div className="error">{error}</div>}
     </form>
   )
 }

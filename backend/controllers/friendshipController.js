@@ -77,8 +77,39 @@ const acceptFriendRequest = async (req, res) => {
   }
 }
 
+const declineFriendRequest = async (req, res) => {
+  try {
+    const { friendshipID } = req.params;
+
+    // find friendship
+    const friendship = await Friendship.findById(friendshipID);
+
+    if (!friendship) {
+      res.status(404).json({ error: "Friendship not found" });
+    }
+
+    friendship.status = 'none';
+    await friendship.save();
+
+    // add each user to each other's friends list
+    const [sender, receiver] = await Promise.all([
+      User.findById(friendship.sender),
+      User.findById(friendship.receiver),
+    ]);
+
+    if (!sender || !receiver) {
+      res.status(404).json({ error: "User(s) not found" });
+    }
+
+    res.status(200).json({ friendship });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
 module.exports = {
   sendFriendRequest,
   getFriendRequest,
-  acceptFriendRequest
+  acceptFriendRequest,
+  declineFriendRequest
 }

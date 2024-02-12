@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useAuthContext } from "../hooks/useAuthContext";
-import { useLogout } from "../hooks/useLogout";
+
 import { RotatingLines } from "react-loader-spinner";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { Button, Modal } from "@mui/material";
+
+import { useAuthContext } from "../hooks/useAuthContext";
+import { useLogout } from "../hooks/useLogout";
+
 import FriendsList from "../components/FriendsList";
+import Requests from "../components/Requests";
 
 const Profile = () => {
   const { logout } = useLogout();
@@ -16,6 +20,8 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [userFound, setUserFound] = useState(true);
   const [showFriends, setShowFriends] = useState(false);
+  const [showRequests, setShowRequests] = useState(false);
+  const [friendReqSent, setFriendReqSent] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -23,6 +29,30 @@ const Profile = () => {
 
   const handleOpen = () => setShowFriends(true);
   const handleClose = () => setShowFriends(false);
+
+  const handleOpenRequests = () => setShowRequests(true);
+  const handleCloseRequests = () => setShowRequests(false);
+
+  const handleAddFriend = async () => {
+    try {
+      const response = await fetch(`http://localhost:4000/api/friendship/send`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          senderID: user.username,
+          receiverID: userData.username 
+        })
+      });
+
+      if (response.ok) {
+        setFriendReqSent(true);
+      }
+    } catch (error) {
+      console.error('Failed to add user!');
+    }
+  }
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -49,7 +79,11 @@ const Profile = () => {
       fetchUserData();
     }
   }, [user, id]);
-
+  
+  useEffect(() => {
+    
+  }, [id])
+  
   if (loading) {
     // Update to loading spinner later
     return  (
@@ -64,11 +98,11 @@ const Profile = () => {
           ariaLabel="rotating-lines-loading"
           wrapperStyle={{}}
           wrapperClass=""
-        />
+          />
       </div>
     )
   }
-
+  
   if (!userFound) {
     return (
       <div className="user-not-found">
@@ -80,7 +114,8 @@ const Profile = () => {
       </div>
     )
   }
-
+  
+  //console.log('userdata', userData);
   return (
     <div className="profile-container">
       <Link to='/messages'>
@@ -94,8 +129,11 @@ const Profile = () => {
         <span className="profile-user-name">{userData.fullName}</span>
         <span className="profile-user-username">@{userData.username}</span>
       </div>
-      <div className="profile-friends">
+      <div className="profile-tabs">
         <h3 onClick={handleOpen}>Friends List</h3>
+        {userData.username === user.username && (
+          <h3 onClick={handleOpenRequests}>Requests</h3>
+        )}
       </div>
       <Modal
         open={showFriends}
@@ -105,9 +143,26 @@ const Profile = () => {
           <FriendsList setShowFriends={setShowFriends} />
         </div>
       </Modal>
+      <Modal
+        open={showRequests}
+        onClose={handleCloseRequests}
+      >
+        <div>
+          <Requests setShowRequests={setShowRequests} />
+        </div>
+      </Modal>
       {userData.username === user.username && (
         <div className="profile-logout">
           <Button variant="contained" color="primary" onClick={handleLogout}>Log out</Button>
+        </div>
+      )}
+      {userData.username !== user.username && 
+      !userData.friends.find(friend => friend.username === user.username) && 
+      (
+        <div className="add-friend-btn">
+          <button onClick={handleAddFriend} disabled={friendReqSent}>
+            {friendReqSent ? "Request Sent!" : "Add Friend"}
+          </button>
         </div>
       )}
     </div>

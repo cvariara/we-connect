@@ -25,7 +25,7 @@ function App() {
         const json = await response.json();
 
         if (response.ok) {
-          console.log('json', json);
+          //console.log('json', json);
           setUserData(json);
         } else {
           console.error("Failed to fetch user profile");

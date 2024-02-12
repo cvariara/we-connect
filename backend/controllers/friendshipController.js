@@ -6,16 +6,21 @@ const sendFriendRequest = async (req, res) => {
   try {
     const { senderID, receiverID } = req.body;
 
+    const [sender, receiver] = await Promise.all([
+      User.findOne({ username: senderID}),
+      User.findOne({ username: receiverID}),
+    ]);
+
     // check if friendship exists
-    const exists = await Friendship.findOne({ sender: senderID, receiver: receiverID });
+    const exists = await Friendship.findOne({ sender: sender._id, receiver: receiver._id });
     if (exists) {
       return res.status(400).json({ error: 'Friend already exists' });
     }
 
     // send friend request
     const pending = new Friendship({
-      sender: senderID,
-      receiver: receiverID,
+      sender: sender._id,
+      receiver: receiver._id,
       status: 'pending',
     });
 
@@ -32,7 +37,13 @@ const getFriendRequest = async (req, res) => {
   try {
     const { userID } = req.params;
 
-    const pending = await Friendship.find({ receiver: userID, status: 'pending' })
+    const receiver = await User.findOne({ username: userID });
+
+    if (!receiver) {
+      res.status(404).json({ error: "User not found" });
+    }
+
+    const pending = await Friendship.find({ receiver: receiver._id, status: 'pending' })
       .populate('sender', 'firstName lastName username profilePicture');
     
     res.status(200).json({ pending });

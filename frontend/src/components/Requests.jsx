@@ -17,20 +17,37 @@ const style = {
   p: 2,
 };
 
-const FriendsList = ({ setShowFriends }) => {
+const Requests = ({ setShowRequests }) => {
   const { id } = useParams();
   const { user } = useAuthContext();
-  const [friends, setFriends] = useState([]);
+  const [requests, setRequests] = useState([]);
+
+  const handleAcceptingRequest = async (friendID) => {
+    try {
+      const response = await fetch(`http://localhost:4000/api/friendship/${friendID}/accept`, {
+        method: 'POST'
+      });
+
+      if (response.ok) {
+        setShowRequests(false);
+        console.log('Friend Added!');
+      } else {
+        console.error('Failed to accept friend request');
+      }
+    } catch (error) {
+      console.error('Error accepting friend request');
+    }
+  }
 
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/user/profile/${id}/friends`);
+        const response = await fetch(`http://localhost:4000/api/friendship/pending-requests/${id}`);
         const json = await response.json();
 
         if (response.ok) {
-          console.log(json)
-          setFriends(json || []);
+          //console.log(json)
+          setRequests(json.pending || []);
         } else {
           console.error("Failed to fetch user profile");
         }
@@ -45,25 +62,24 @@ const FriendsList = ({ setShowFriends }) => {
     }
   }, [user, id]);
 
-  //console.log(friends);
+  console.log(requests);
 
-  return(
+  return (
     <div className="friends-list">
       <Box sx={style}>
         <div className="friends-list-nav">
-          <span>Friends</span>
-          <CloseIcon onClick={() => setShowFriends(false)} />
+          <span>Friend Requests</span>
+          <CloseIcon onClick={() => setShowRequests(false)} />
         </div>
-        {friends.map(friend => (
-          <li key={friend._id}>
-            <Link to={`/${friend.username}/profile`} onClick={() => setShowFriends(false)}>
-              {friend.firstName} {friend.lastName} - {friend.username}
-            </Link>
+        {requests.map(request => (
+          <li key={request._id}>
+            {request.sender.firstName} {request.sender.lastName} - {request.sender.username}
+            <button onClick={() => handleAcceptingRequest(request._id)}>Accept</button>
           </li>
         ))}
       </Box>
     </div>
-  )
+  );
 }
 
-export default FriendsList;
+export default Requests;

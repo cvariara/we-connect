@@ -173,6 +173,18 @@ nav {
   gap: .75rem;
 }
 
+.profile-tabs {
+  display: flex;
+  gap: 2rem;
+}
+
+.profile-tabs > h3 {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* FRIENDS LIST COMPONENT */
+
 .friends-list > div {
   display: flex;
   flex-direction: column;

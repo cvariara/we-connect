@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { Button } from "@mui/material";
 
 const Navbar = ({ userData }) => {
   const { logout } = useLogout();
@@ -11,14 +12,17 @@ const Navbar = ({ userData }) => {
 
   return (
     <header>
-      <div className="container">
+      <div className="nav">
         <nav>
-          <Link to={`/${userData.username}/profile`}>
-            <img className="profile-picture-sm" src={userData.profilePicture} alt="" />
-            <span>{userData.username}</span>
-          </Link>
+          <div className="profile-link">
+            <Link to={`/${userData.username}/profile`}>
+              <img className="profile-picture-sm" src={userData.profilePicture} alt="" />
+              <span>@{userData.username}</span>
+            </Link>
+          </div>
           <div>
-            <button className="logout" onClick={handleClick}>Log out</button>
+            <Button variant="contained" color="primary" onClick={handleClick}>Log out</Button>
+            {/* <button className="logout" onClick={handleClick}>Log out</button> */}
           </div>
         </nav>
       </div>

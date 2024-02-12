@@ -17,6 +17,14 @@ a {
   color: black;
 }
 
+li {
+  list-style-type: none;
+}
+
+.App {
+  display: flex;
+}
+
 .home,
 .login,
 .signup {
@@ -32,6 +40,8 @@ a {
   gap: 6rem;
   font-size: 4rem;
 }
+
+/* LOG IN & SIGN UP PAGES */
 
 .login,
 .signup {
@@ -95,8 +105,32 @@ input.error {
   margin: 5rem auto;
 }
 
+/* HOME/MESSAGES PAGE */
+
 .messages-container {
   padding: 2rem;
+  width: 80%;
+}
+
+.message-list {
+  background-color: gray;
+  width: 20%;
+  height: 100vh;
+  padding: 2rem;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* PROFILE COMPONENT */
+
+.profile-link a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .profile-picture-sm {
@@ -118,7 +152,6 @@ input.error {
   margin: 4rem auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   gap: 2rem;
 }
@@ -126,7 +159,7 @@ input.error {
 .return {
   position: absolute;
   top: 20px;
-  left: 20px;
+  left: calc(20px + 20%);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -138,4 +171,28 @@ input.error {
   justify-content: center;
   align-items: center;
   gap: .75rem;
+}
+
+.friends-list > div {
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+}
+
+.friends-list-nav {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid black;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+}
+
+.friends-list-nav > span {
+  width: 120%;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.friends-list-nav > svg {
+  cursor: pointer;
 }

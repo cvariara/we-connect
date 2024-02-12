@@ -4,18 +4,25 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { useLogout } from "../hooks/useLogout";
 import { RotatingLines } from "react-loader-spinner";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import { Button, Modal } from "@mui/material";
+import FriendsList from "../components/FriendsList";
 
 const Profile = () => {
+  const { logout } = useLogout();
   const { user } = useAuthContext();
   const { id } = useParams();
+
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userFound, setUserFound] = useState(true);
-  const { logout } = useLogout();
+  const [showFriends, setShowFriends] = useState(false);
 
-  const handleClick = () => {
+  const handleLogout = () => {
     logout();
   }
+
+  const handleOpen = () => setShowFriends(true);
+  const handleClose = () => setShowFriends(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -85,16 +92,22 @@ const Profile = () => {
       <img src={userData.profilePicture} className="profile-picture-lg" />
       <div className="profile-user-info">
         <span className="profile-user-name">{userData.fullName}</span>
-        <span className="profile-user-username">{userData.username}</span>
+        <span className="profile-user-username">@{userData.username}</span>
       </div>
       <div className="profile-friends">
-        <Link to={`/${userData.username}/friends`}>
-          <h3>Friends List</h3>
-        </Link>
+        <h3 onClick={handleOpen}>Friends List</h3>
       </div>
+      <Modal
+        open={showFriends}
+        onClose={handleClose}
+      >
+        <div>
+          <FriendsList setShowFriends={setShowFriends} />
+        </div>
+      </Modal>
       {userData.username === user.username && (
         <div className="profile-logout">
-          <button className="logout" onClick={handleClick}>Log out</button>
+          <Button variant="contained" color="primary" onClick={handleLogout}>Log out</Button>
         </div>
       )}
     </div>

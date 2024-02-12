@@ -1,8 +1,23 @@
 import { Link, useParams } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useEffect, useState } from "react";
+import { Box } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 
-const FriendsList = () => {
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  height: 500,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 2,
+};
+
+const FriendsList = ({ setShowFriends }) => {
   const { id } = useParams();
   const { user } = useAuthContext();
   const [friends, setFriends] = useState([]);
@@ -33,15 +48,20 @@ const FriendsList = () => {
   console.log(friends);
 
   return(
-    <div>
-      <h1>Friends List</h1>
-      {friends.map(friend => (
-        <li key={friend._id}>
-          <Link to={`/${friend.username}/profile`}>
-            {friend.firstName} {friend.lastName} - {friend.username}
-          </Link>
-        </li>
-      ))}
+    <div className="friends-list">
+      <Box sx={style}>
+        <div className="friends-list-nav">
+          <span>Friends</span>
+          <CloseIcon onClick={() => setShowFriends(false)} />
+        </div>
+        {friends.map(friend => (
+          <li key={friend._id}>
+            <Link to={`/${friend.username}/profile`} onClick={() => setShowFriends(false)}>
+              {friend.firstName} {friend.lastName} - {friend.username}
+            </Link>
+          </li>
+        ))}
+      </Box>
     </div>
   )
 }

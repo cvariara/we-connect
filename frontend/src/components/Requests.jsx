@@ -71,12 +71,14 @@ const Requests = ({ setShowRequests }) => {
           <span>Friend Requests</span>
           <CloseIcon onClick={() => setShowRequests(false)} />
         </div>
-        {requests.map(request => (
+        {requests.length > 0 ? requests.map(request => (
           <li key={request._id}>
             {request.sender.firstName} {request.sender.lastName} - {request.sender.username}
             <button onClick={() => handleAcceptingRequest(request._id)}>Accept</button>
-          </li>
-        ))}
+          </li> 
+        )) : 
+        <span>You have no friend requests.</span>
+      }
       </Box>
     </div>
   );

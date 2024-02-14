@@ -28,7 +28,7 @@ const sendFriendRequest = async (req, res) => {
 
     res.status(200).json({ pending });
   } catch (error) {
-    res.status(500).json({ error: 'Internal Serval Error' });
+    res.status(400).json({ error: error.message });
   }
 }
 
@@ -48,7 +48,7 @@ const getFriendRequest = async (req, res) => {
     
     res.status(200).json({ pending });
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(400).json({ error: error.message });
   }
 }
 
@@ -84,7 +84,7 @@ const acceptFriendRequest = async (req, res) => {
 
     res.status(200).json({ message: 'Friendship accepted successfully' });
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(400).json({ error: error.message });
   }
 }
 
@@ -114,7 +114,7 @@ const declineFriendRequest = async (req, res) => {
 
     res.status(200).json({ friendship });
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(400).json({ error: error.message });
   }
 }
 

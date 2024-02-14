@@ -1,10 +1,12 @@
 const express = require('express');
 const requireAuth = require('../middleware/requireAuth');
 
+const { sendMessage, getMessages } = require('../controllers/messageController');
+
 const router = express.Router();
 
 // require auth for all messages routes
-router.use(requireAuth);
+//router.use(requireAuth);
 
 // GET all messages
 router.get('/', (req, res) => {
@@ -12,13 +14,9 @@ router.get('/', (req, res) => {
 })
 
 // GET a single message
-router.get('/:id', (req, res) => {
-  res.json({mssg: 'GET a single workout'})
-})
+router.get('/:receiverID', getMessages)
 
 // POST a message
-router.post('/:id', (req, res) => {
-  res.json({mssg: 'POST a new workout'})
-})
+router.post('/:receiverID', sendMessage)
 
 module.exports = router

@@ -16,7 +16,7 @@ const loginUser = async (req, res) => {
     // create a token
     const token = createToken(user._id);
 
-    res.status(200).json({ username, token });
+    res.status(200).json({ username, _id: user._id, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -45,7 +45,7 @@ const signupUser = async (req, res) => {
     // create a token
     const token = createToken(user._id);
 
-    res.status(200).json({ username, token });
+    res.status(200).json({ username, _id: user._id, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -84,40 +84,40 @@ const getUsersFriends = async (req, res) => {
   }
 }
 
-const addFriends = async (req, res) => {
-  try {
-    const { username } = req.params;
-    const { friendUsername } = req.body;
+// const addFriends = async (req, res) => {
+//   try {
+//     const { username } = req.params;
+//     const { friendUsername } = req.body;
 
-    const [user, friend] = await Promise.all([
-      User.findOne({ username }),
-      User.findOne({ username: friendUsername })
-    ]);
+//     const [user, friend] = await Promise.all([
+//       User.findOne({ username }),
+//       User.findOne({ username: friendUsername })
+//     ]);
 
-    if (!user || !friend) {
-      return res.status(404).json({ error: 'User not found' });
-    }
+//     if (!user || !friend) {
+//       return res.status(404).json({ error: 'User not found' });
+//     }
 
-    // Check if the friend is not already in the friends list
-    if (!user.friends.includes(friend._id)) {
-      user.friends.push(friend._id);
-      friend.friends.push(user._id);
-      await user.save();
+//     // Check if the friend is not already in the friends list
+//     if (!user.friends.includes(friend._id)) {
+//       user.friends.push(friend._id);
+//       friend.friends.push(user._id);
+//       await user.save();
 
-      res.status(200).json({ message: 'Friend added successfully' });
-    } else {
-      res.status(400).json({ error: 'User is already a friend' });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-}
+//       res.status(200).json({ message: 'Friend added successfully' });
+//     } else {
+//       res.status(400).json({ error: 'User is already a friend' });
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// }
 
 module.exports = {
   loginUser,
   signupUser,
   getUser,
   getUsersFriends,
-  addFriends
+  //addFriends
 }

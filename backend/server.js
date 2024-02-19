@@ -3,6 +3,8 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const http = require('http');
+const socketIo = require('socket.io');
 
 const messageRoutes = require('./routes/messages');
 const userRoutes = require('./routes/user');
@@ -10,6 +12,8 @@ const friendshipRoutes = require('./routes/friendship');
 
 // express app
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
 
 // middleware
 app.use(cors({origin: "http://localhost:5173"}));

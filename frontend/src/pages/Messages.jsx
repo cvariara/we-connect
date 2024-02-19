@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { RotatingLines } from 'react-loader-spinner';
+import SendIcon from '@mui/icons-material/Send';
 import Navbar from "../components/Navbar";
 
 const Messages = ({ userData }) => {
@@ -10,6 +11,7 @@ const Messages = ({ userData }) => {
   const [messages, setMessages] = useState([]);
   const [receiverInfo, setReceiverInfo] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -73,6 +75,38 @@ const Messages = ({ userData }) => {
     }
   }, [messages]);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const response = await fetch(`http://localhost:4000/api/messages/${receiverID}`, {
+        method: 'POST',
+        body: JSON.stringify({
+          senderID: userData._id,
+          content: message
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        console.error(json.error);
+      }
+
+      if (response.ok) {
+        setMessage('');
+        console.log('new message', json.message);
+        console.log(json.message.sender)
+        setMessages([...messages, json.message]);
+      }
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
+
   if (loading) {
     return  (
       <div className="loading">
@@ -102,20 +136,29 @@ const Messages = ({ userData }) => {
           </Link>
         </div>
         <div className="messages">
-          {messages.length > 0 ? messages.map((message, index) => (
-            <div key={index} className={message.sender.username === userData.username ? 'sender message-bubble' : 'receiver message-bubble'}>
-              <p>{message.content}</p>
-            </div>
-          )) :
-            <p>You have no message with {receiverInfo.username}</p>
-          }
+        {messages.length > 0 ? messages.map((msg, index) => (
+          <div key={index} className={msg.sender.username === userData.username 
+                                      || msg.sender === userData._id ? 
+                                      'sender message-bubble' : 'receiver message-bubble'}>
+            <p>{msg.content}</p>
+          </div>
+        )) :
+          <p>You have no message with {receiverInfo.username}</p>
+        }
           <div ref={messagesEndRef} />
         </div>
-        <form action="" method="post" className="send-text">
+        <form className="send-text" onSubmit={handleSubmit}>
           <div className="message-text">
-            <input type="text" />
+            <input 
+              type="text" 
+              placeholder="Type a message" 
+              onChange={(e) => setMessage(e.target.value)}
+              value={message}
+            />
           </div>
-          <button>Send</button>
+          <button>
+            <SendIcon />
+          </button>
         </form>
       </div>
     </div>

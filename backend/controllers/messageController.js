@@ -9,7 +9,7 @@ const sendMessage = async (req, res) => {
     // check if sender and receiver are friends
     const [sender, receiver] = await Promise.all([
       User.findById(senderID).populate('friends'),
-      User.findById(receiverID)
+      User.findOne({ username: receiverID })
     ]);
 
     if (!sender || !receiver || !sender.friends.some(friend => friend._id.equals(receiver._id))) {
@@ -19,7 +19,7 @@ const sendMessage = async (req, res) => {
     // Create and save the message
     const message = new Message({
       sender: senderID,
-      receiver: receiverID,
+      receiver: receiver._id,
       content: content
     });
 
@@ -36,7 +36,7 @@ const getMessages = async (req, res) => {
     const receiverID = req.params.receiverID;
     const senderID = req.query.senderID;
 
-    const receiver = await User.findOne({ username: receiverID});
+    const receiver = await User.findOne({ username: receiverID });
     
     const messages = await Message.find({
       $or: [

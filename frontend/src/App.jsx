@@ -89,7 +89,7 @@ function App() {
           />
           <Route
             path='/:id/profile'
-            element={user ? <Profile /> : <Navigate to='/login' />}
+            element={<Profile />}
           />
         </Routes>
       </BrowserRouter>

@@ -62,9 +62,9 @@ const MessagesList = () => {
       <div>
         {friends && friends.length > 0 ? (
           friends.map((friend, index) => (
-            <div key={index}>
+            <div key={index} className="message-list-friend">
               <Link to={`/messages/${friend.username}`}>
-                <h2>{friend.username}</h2>
+                <h3>{friend.username}</h3>
               </Link>
             </div>
           ))

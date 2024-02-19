@@ -11,6 +11,7 @@ import Messages from './pages/Messages';
 import Profile from './pages/Profile';
 import FriendsList from './components/FriendsList';
 import MessagesList from './components/MessagesList';
+import LandingPage from './pages/LandingPage';
 
 function App() {
   const { user } = useAuthContext();
@@ -80,16 +81,16 @@ function App() {
           />
           <Route
             path='/messages'
+            element={user ? <LandingPage userData={userData} /> : <Navigate to='/login' />}
+          />
+          <Route 
+            path='/messages/:receiverID'
             element={user ? <Messages userData={userData} /> : <Navigate to='/login' />}
           />
           <Route
             path='/:id/profile'
-            element={<Profile />}
+            element={user ? <Profile /> : <Navigate to='/login' />}
           />
-          {/* <Route 
-            path='/:id/friends'
-            element={<FriendsList />}
-          /> */}
         </Routes>
       </BrowserRouter>
     </div>

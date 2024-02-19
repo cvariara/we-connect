@@ -42,7 +42,6 @@ li {
 }
 
 /* LOG IN & SIGN UP PAGES */
-
 .login,
 .signup {
   background-color: white;
@@ -60,10 +59,6 @@ li {
 .signup h3 {
   grid-column: 1 / 3;
   font-size: 2rem;
-}
-
-.login .form-group {
-  grid-column: 1 / 3;
 }
 
 .form-group input {
@@ -87,7 +82,8 @@ form button {
   align-self: flex-end;
 }
 
-div.error {
+div.error,
+input.error {
   padding: 10px;
   background: #ffefef;
   border: 1px solid #e7195a;
@@ -96,20 +92,19 @@ div.error {
   margin: 20px 0;
 }
 
-input.error {
-  border: 1px solid #e7195a;
-}
-
 .loading {
   max-width: fit-content;
   margin: 5rem auto;
 }
 
 /* HOME/MESSAGES PAGE */
-
 .messages-container {
   padding: 2rem;
   width: 80%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .message-list {
@@ -125,24 +120,124 @@ nav {
   justify-content: space-between;
 }
 
-/* PROFILE COMPONENT */
+/* MESSAGE CONTAINER */
+.message-container {
+  margin-top: 2rem;
+  border: 1px solid black;
+  border-radius: 8px;
+  height: 90%;
+  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+}
 
+.message-container > p {
+  font-size: 24px;
+  text-align: center;
+  margin: 6rem 0;
+}
+
+.messages {
+  flex: 1 1 0%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.receiver-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border-bottom: 1px solid black;
+  margin-bottom: 12px;
+  padding: 8px 0;
+}
+
+.message-bubble {
+  position: relative;
+  display: inline-block;
+  padding: 10px;
+  max-width: 40%;
+  margin-bottom: 8px;
+  word-wrap: break-word; /* Wrap long words */
+}
+
+.message-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  border-style: solid;
+  border-width: 0 12px 12px 12px;
+}
+
+.receiver::before {
+  left: -8px;
+  border-color: transparent transparent rgb(70, 70, 70) transparent;
+}
+
+.sender::before {
+  right: -8px;
+  border-color: transparent transparent rgb(26, 131, 217) transparent;
+}
+
+.receiver,
+.sender {
+  color: white;
+  padding: 10px;
+}
+
+.receiver {
+  background-color: rgb(70, 70, 70);
+  margin-left: 20px;
+  align-self: flex-start;
+  border-radius: 12px 12px 12px 0;
+}
+
+.sender {
+  background-color: rgb(26, 131, 217);
+  margin-right: 20px;
+  align-self: flex-end;
+  border-radius: 12px 12px 0 12px;
+}
+
+.send-text {
+  display: flex;
+  width: 100%;
+  padding: 1rem;
+}
+
+.message-text {
+  flex: 1 1 0%;
+}
+
+.message-text input {
+  width: 100%;
+  height: 100%;
+  font-size: 1.5rem;
+  padding: 8px 4px;
+}
+
+/* PROFILE COMPONENT */
 .profile-link a {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.profile-picture-sm {
+.profile-picture-sm,
+.profile-picture-lg {
   border: 1px solid black;
   border-radius: 50%;
+}
+
+.profile-picture-sm {
   height: 4rem;
   width: 4rem;
 }
 
 .profile-picture-lg {
-  border: 1px solid black;
-  border-radius: 50%;
   height: 8rem;
   width: 8rem;
 }
@@ -184,7 +279,6 @@ nav {
 }
 
 /* FRIENDS LIST COMPONENT */
-
 .friends-list > div {
   display: flex;
   flex-direction: column;

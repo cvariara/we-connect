@@ -34,12 +34,14 @@ const sendMessage = async (req, res) => {
 const getMessages = async (req, res) => {
   try {
     const receiverID = req.params.receiverID;
-    const senderID = req.body.senderID;
+    const senderID = req.query.senderID;
+
+    const receiver = await User.findOne({ username: receiverID});
     
     const messages = await Message.find({
       $or: [
-        { sender: senderID, receiver: receiverID },
-        { sender: receiverID, receiver: senderID }
+        { sender: senderID, receiver: receiver._id },
+        { sender: receiver._id, receiver: senderID }
       ]
     })
       .populate('sender', 'username firstName lastName fullName')
@@ -48,6 +50,7 @@ const getMessages = async (req, res) => {
 
     res.status(200).json({ messages });
   } catch (error) {
+    console.error('Error fetching messages: ', error);
     res.status(400).json({ error: error.message });
   }
 }

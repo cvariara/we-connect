@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { RotatingLines } from 'react-loader-spinner';
 import SendIcon from '@mui/icons-material/Send';
+import { io } from "socket.io-client";
+
 import Navbar from "../components/Navbar";
 
 const Messages = ({ userData }) => {
@@ -12,6 +14,34 @@ const Messages = ({ userData }) => {
   const [receiverInfo, setReceiverInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const socket = useRef();
+
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+
+    socket.current.on("getMessage", data => {
+      setArrivalMessage({
+        sender: data.senderId,
+        receiver: data.receiverId,
+        content: data.content,
+        timestamp: Date.now(),
+      })
+    })
+  }, []);
+
+  useEffect(() => {
+    arrivalMessage && 
+      (receiverInfo._id === arrivalMessage.sender || userData._id === arrivalMessage.sender) &&
+      setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage])
+  
+  useEffect(() => {
+    socket.current.emit("addUser", userData._id);
+    socket.current.on("getUsers", users => {
+      console.log(users);
+    })
+  }, [userData]);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -74,9 +104,15 @@ const Messages = ({ userData }) => {
       messagesEndRef.current.scrollIntoView({ behavior: "auto", block: "end" });
     }
   }, [messages]);
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    socket.current.emit("sendMessage", {
+      senderId: userData._id,
+      receiverId: receiverInfo._id,
+      content: message
+    });
     
     try {
       const response = await fetch(`http://localhost:4000/api/messages/${receiverID}`, {

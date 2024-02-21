@@ -1,6 +1,8 @@
 const Message = require('../models/messageModel');
 const User = require('../models/UserModel');
 
+const io = require('../server').io;
+
 const sendMessage = async (req, res) => {
   try {
     const receiverID = req.params.receiverID;
@@ -25,10 +27,21 @@ const sendMessage = async (req, res) => {
 
     await message.save();
 
+    // Emit the message to the receiver via Socket.io
+    //io.emit(`message:${receiverID}`, message);
+
     res.status(200).json({ message });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
+}
+
+// This function can be used to handle receiving messages via Socket.io
+const receiveMessage = async (socket) => {
+  socket.on('join', (receiverID) => {
+    // Join a room based on the receiver's ID
+    socket.join(`messages:${receiverID}`);
+  });
 }
 
 const getMessages = async (req, res) => {
@@ -57,5 +70,6 @@ const getMessages = async (req, res) => {
 
 module.exports = {
   sendMessage,
-  getMessages
+  getMessages,
+  receiveMessage
 }

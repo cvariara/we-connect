@@ -275,6 +275,13 @@ nav {
   gap: 8px;
 }
 
+.settings-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
 .profile-user-info {
   display: flex;
   flex-direction: column;
@@ -291,6 +298,16 @@ nav {
 .profile-tabs > h3 {
   cursor: pointer;
   text-decoration: underline;
+}
+
+/* SETTINGS */
+#settings {
+  max-width: 800px;
+  margin: 4rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 }
 
 /* FRIENDS LIST COMPONENT */

@@ -12,6 +12,7 @@ import Profile from './pages/Profile';
 import FriendsList from './components/FriendsList';
 import MessagesList from './components/MessagesList';
 import LandingPage from './pages/LandingPage';
+import Settings from './pages/Settings';
 
 function App() {
   const { user } = useAuthContext();
@@ -90,6 +91,10 @@ function App() {
           <Route
             path='/:id/profile'
             element={<Profile />}
+          />
+          <Route
+            path='/:id/settings'
+            element={<Settings />}
           />
         </Routes>
       </BrowserRouter>

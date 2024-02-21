@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { RotatingLines } from "react-loader-spinner";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { Button, Modal } from "@mui/material";
 
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -123,6 +124,11 @@ const Profile = () => {
           <KeyboardBackspaceIcon />
           <span>Return to Messages</span>
         </div>
+      </Link>
+      <Link to={`/${userData.username}/settings`}>
+        <span className="settings-btn">
+          <SettingsIcon fontSize="large" />
+        </span>
       </Link>
       <img src={userData.profilePicture} className="profile-picture-lg" />
       <div className="profile-user-info">

@@ -1,17 +1,18 @@
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useEffect, useState } from 'react';
 
 const Settings = () => {
   const { user } = useAuthContext();
+  const { id } = useParams();
   const [userData, setUserData] = useState(null);
   const [userFound, setUserFound] = useState(true)
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/user/profile/${user.username}`);
+        const response = await fetch(`http://localhost:4000/api/user/profile/${id}`);
         const json = await response.json();
 
         if (response.ok) {
@@ -32,7 +33,7 @@ const Settings = () => {
     if (user && user.username && id) {
       fetchUserData();
     }
-  }, [user])
+  }, [user, id])
 
   if (!userFound) {
     return (
@@ -40,7 +41,7 @@ const Settings = () => {
         <h2>Sorry, this page isn't available.</h2>
         <p>
           The link you followed may be broken, or the page may be removed.
-          <Link to={`/${user.username}/profile`}>Go back to Profile.</Link>
+          <Link to={`/${id}/profile`}>Go back to Profile.</Link>
         </p>
       </div>
     )
@@ -48,7 +49,7 @@ const Settings = () => {
 
   return (
     <div id='settings'>
-      <Link to={`/${user.username}/profile`}>
+      <Link to={`/${id}/profile`}>
         <div className="return">
           <KeyboardBackspaceIcon />
           <span>Return to Profile</span>

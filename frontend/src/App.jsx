@@ -19,6 +19,7 @@ function App() {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // need to change this useEffect, its affecting everything negatively
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -69,16 +70,16 @@ function App() {
         {user && <MessagesList />}
         <Routes>
           <Route 
-            path='/'
-            element={!user ? <Home /> : <Navigate to={`/${user.username}/profile`} />}
-          />
-          <Route 
             path='/login' 
             element={!user ? <Login /> : <Navigate to='/messages' />} 
           />
           <Route 
             path='/signup' 
             element={!user ? <Signup /> : <Navigate to='/messages' />} 
+          />
+          <Route 
+            path='/'
+            element={!user ? <Home /> : <Navigate to={`/${user.username}/profile`} />}
           />
           <Route
             path='/messages'

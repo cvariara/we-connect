@@ -26,6 +26,8 @@ const Profile = () => {
 
   const handleLogout = () => {
     logout();
+
+    navigate('/messages');
   }
 
   const handleOpen = () => setShowFriends(true);

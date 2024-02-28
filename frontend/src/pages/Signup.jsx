@@ -16,7 +16,8 @@ const Signup = () => {
     e.preventDefault();
 
     await signup(firstName, lastName, username, email, password, profilePicture);
-    navigate('/messages');
+    
+    //if (!error) navigate('/messages');
   }
 
   return (
@@ -75,6 +76,7 @@ const Signup = () => {
       <button disabled={loading}>Sign up</button>
       <p>
         Already have an account?
+        <br />
         <Link to="/login">Log in</Link>
       </p>
       {error && <div className="error">

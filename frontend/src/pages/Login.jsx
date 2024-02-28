@@ -5,15 +5,14 @@ import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { login, error, loading } = useLogin();
+  const { login, loading, error } = useLogin();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     await login(username, password);
-
-    navigate('/messages');
+    console.log(error);
   }
 
   return (
@@ -40,6 +39,7 @@ const Login = () => {
       <button disabled={loading}>Log in</button>
       <p>
         New to WeConnect?
+        <br />
         <Link to="/signup">Sign up now</Link>!
       </p>
       {error && <div className="error">{error}</div>}

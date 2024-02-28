@@ -74,16 +74,11 @@ const Messages = ({ userData }) => {
   useEffect(() => {
     const fetchReceiverInfo = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/user/profile/${receiverID}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            // Add authentication headers if needed
-          },
-        });
+        const response = await fetch(`http://localhost:4000/api/user/profile/${receiverID}`);
         const json = await response.json();
 
         if (response.ok) {
+          console.log(json)
           setReceiverInfo(json);
         } else {
           console.error('Failed to fetch receiver username');
@@ -160,6 +155,9 @@ const Messages = ({ userData }) => {
       </div>
     )
   }
+
+  console.log('info')
+  console.log(receiverInfo.username)
 
   return (
     <div className="messages-container">

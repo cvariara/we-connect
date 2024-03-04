@@ -10,13 +10,15 @@ const Navbar = ({ userData }) => {
     logout();
   }
 
+  console.log(userData.pfpurl)
+
   return (
     <header>
       <div className="nav">
         <nav>
           <div className="profile-link">
             <Link to={`/${userData.username}/profile`}>
-              <img className="profile-picture-sm" src={userData.profilePicture} alt="" />
+              <img className="profile-picture-sm" src={`http://localhost:4000/${userData.pfpurl}`} alt="" />
               <span>@{userData.username}</span>
             </Link>
           </div>

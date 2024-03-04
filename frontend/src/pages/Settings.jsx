@@ -43,6 +43,8 @@ const Settings = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+
+    
   }
 
   const handleCancel = (e) => {

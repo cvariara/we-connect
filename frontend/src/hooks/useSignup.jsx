@@ -6,14 +6,18 @@ export const useSignup = () => {
   const [loading, setLoading] = useState(null);
   const { dispatch } = useAuthContext();
 
-  const signup = async (firstName, lastName, username, email, password, profilePicture) => {
+  //const signup = async (firstName, lastName, username, email, password, profilePicture) => {
+  const signup = async (formData) => {
     setLoading(true);
     setError(null);
 
+    console.log('pfp', formData.get('profilePicture'));
+
     const response = await fetch('http://localhost:4000/api/user/signup', {
       method: "POST",
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({firstName, lastName, username, email, password, profilePicture})
+      //headers: {'Content-Type': 'multipart/form-data'},
+      //headers: {'Content-Type': 'application/json'},
+      body: formData
     });
     const json = await response.json();
 

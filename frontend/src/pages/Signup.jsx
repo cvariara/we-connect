@@ -8,16 +8,22 @@ const Signup = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
-  const [profilePicture, setProfilePicture] = useState('');
+  const [profilePicture, setProfilePicture] = useState(null);
   const { signup, loading, error } = useSignup();
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await signup(firstName, lastName, username, email, password, profilePicture);
-    
-    //if (!error) navigate('/messages');
+    const formData = new FormData();
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append("username", username);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("profilePicture", profilePicture);
+
+    await signup(formData);
+    //await signup(firstName, lastName, username, email, password, profilePicture);
   }
 
   return (
@@ -65,11 +71,11 @@ const Signup = () => {
         />
       </div>
       <div className="form-group">
-        <label>Profile Picture:</label>
+        <label htmlFor="profilePicture">Profile Picture:</label>
         <input 
           type="file"
-          onChange={(e) => setProfilePicture(e.target.value)}
-          value={(profilePicture)} 
+          onChange={(e) => setProfilePicture(e.target.files[0])}
+          name="profilePicture"
         />
       </div>   
 

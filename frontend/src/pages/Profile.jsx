@@ -132,7 +132,7 @@ const Profile = () => {
           <SettingsIcon fontSize="large" />
         </span>
       </Link>
-      <img src={userData.profilePicture} className="profile-picture-lg" />
+      <img src={`http://localhost:4000/${userData.pfpurl}`} className="profile-picture-lg" />
       <div className="profile-user-info">
         <span className="profile-user-name">{userData.fullName}</span>
         <span className="profile-user-username">@{userData.username}</span>

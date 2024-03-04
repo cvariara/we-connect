@@ -1,12 +1,16 @@
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useEffect, useState } from 'react';
 
 const Settings = () => {
   const { user } = useAuthContext();
   const { id } = useParams();
-  const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
+  const [profilePicture, setProfilePicture] = useState('');
   const [userFound, setUserFound] = useState(true)
 
   useEffect(() => {
@@ -16,7 +20,11 @@ const Settings = () => {
         const json = await response.json();
 
         if (response.ok) {
-          setUserData(json);
+          console.log(json);
+          setFirstName(json.firstName);
+          setLastName(json.lastName);
+          setUsername(json.username);
+          setProfilePicture(json.profilePicture);
         } else {
           console.error("Failed to fetch user profile");
           setUserFound(false);
@@ -24,8 +32,6 @@ const Settings = () => {
       } catch (error) {
         console.error("Error fetching user profile:", error.message);
         setUserFound(false);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -34,6 +40,16 @@ const Settings = () => {
       fetchUserData();
     }
   }, [user, id])
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+  }
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+
+    navigate(`/${user.username}/profile`);
+  }
 
   if (!userFound) {
     return (
@@ -57,7 +73,29 @@ const Settings = () => {
       </Link>
       <h1>Settings</h1>
       <form action="">
+        <div className="update update-pfp">
 
+        </div>
+        <div className="update update-username">
+          <input 
+            type="text"
+            value={username}
+          />
+        </div>
+        <div className="update update-name">
+          <input 
+            type="text"
+            value={firstName}
+          />
+          <input 
+            type="text"
+            value={lastName}
+          />
+        </div>
+        <div className="update update-btns">
+          <button onClick={handleUpdate}>Apply</button>
+          <button onClick={handleCancel}>Cancel</button>
+        </div>
       </form>
     </div>
   )

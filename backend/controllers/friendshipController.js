@@ -11,6 +11,10 @@ const sendFriendRequest = async (req, res) => {
       User.findOne({ username: receiverID}),
     ]);
 
+    if (!receiver) {
+      res.status(400).json({ error: 'Username not found' });
+    }
+
     // check if friendship exists
     const exists = await Friendship.findOne({ sender: sender._id, receiver: receiver._id });
     if (exists) {

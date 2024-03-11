@@ -14,7 +14,7 @@ const sendFriendRequest = async (req, res) => {
     // check if friendship exists
     const exists = await Friendship.findOne({ sender: sender._id, receiver: receiver._id });
     if (exists) {
-      return res.status(400).json({ error: 'Friend already exists' });
+      return res.status(400).json({ error: 'Friend already exists or is pending' });
     }
 
     // send friend request

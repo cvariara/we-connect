@@ -13,6 +13,7 @@ import FriendsList from './components/FriendsList';
 import MessagesList from './components/MessagesList';
 import LandingPage from './pages/LandingPage';
 import Settings from './pages/Settings';
+import AddUser from './pages/AddUser';
 
 function App() {
   const { user } = useAuthContext();
@@ -96,6 +97,10 @@ function App() {
           <Route
             path='/:id/settings'
             element={<Settings />}
+          />
+          <Route
+            path='/:id/add'
+            element={<AddUser />}
           />
         </Routes>
       </BrowserRouter>

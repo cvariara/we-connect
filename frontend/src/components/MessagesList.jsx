@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { RotatingLines } from 'react-loader-spinner';
+import AddIcon from '@mui/icons-material/Add';
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 
@@ -56,9 +57,14 @@ const MessagesList = () => {
 
   return (
     <div className="message-list">
-      <Link to="/messages">
-        <h1>Messages</h1>
-      </Link>
+      <div className="messages-nav">
+        <Link to="/messages">
+          <h1>Messages</h1>
+        </Link>
+        <Link to={`/${user.username}/add`}>
+          <AddIcon />
+        </Link>
+      </div>
       <div>
         {friends && friends.length > 0 ? (
           friends.map((friend, index) => (

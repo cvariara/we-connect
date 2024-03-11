@@ -165,7 +165,7 @@ const Messages = ({ userData }) => {
       <div className="message-container">
         <div className="">
           <Link to={`/${receiverInfo.username}/profile`} className="receiver-info">
-            <img className="profile-picture-sm" src={receiverInfo.profilePicture} alt="" />
+            <img className="profile-picture-sm" src={`http://localhost:4000/${receiverInfo.pfpurl}`} alt="" />
             <h5>{receiverInfo.fullName}</h5>
           </Link>
         </div>

@@ -37,7 +37,7 @@ router.post('/signup', upload.single('profilePicture'), signupUser);
 router.get('/profile/:username', getUser);
 
 // update user
-router.put('/profile/:username', updateUser);
+router.put('/profile/:id', upload.single('profilePicture'), updateUser);
 
 // get user friends list
 router.get('/profile/:username/friends', getUsersFriends);

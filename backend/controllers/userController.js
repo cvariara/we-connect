@@ -69,20 +69,31 @@ const getUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { username } = req.params;
-  const { firstName, lastName, username: newUsername } = req.body;
+  const { id } = req.params;
+  const { firstName, lastName, username } = req.body;
+  let { profilePicture } = req.body;
+  
+  console.log('req.body', req.body);
+  console.log('req.file', req.file);
 
-  if (req.file) {
-    // If a file was uploaded, use req.file.filename to get the filename
-    const profilePicture = req.file.filename;
-  }
-
+  let user;
   try {
-    const user = await User.findOneAndUpdate(
-      { username: username }, 
-      { $set: { firstName, lastName, username: newUsername, profilePicture } },
-      { new: true }
-    );
+    if (req.file) {
+      const newPfp = req.file.filename;
+      user = await User.findByIdAndUpdate(
+        id, 
+        { $set: { firstName, lastName, username, profilePicture: newPfp } },
+        { new: true }
+      );
+    } else {
+      user = await User.findByIdAndUpdate(
+        id, 
+        { $set: { firstName, lastName, username, profilePicture } },
+        { new: true }
+      );
+    }
+
+    console.log(user);
 
     if (!user) {
       return res.status(404).json({ error: 'No such user' });

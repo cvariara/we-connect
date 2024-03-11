@@ -1,7 +1,9 @@
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useEffect, useState } from 'react';
+
 
 const Settings = () => {
   const { user } = useAuthContext();
@@ -10,10 +12,11 @@ const Settings = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
-  const [profilePicture, setProfilePicture] = useState('');
+  const [profilePicture, setProfilePicture] = useState(null);
   const [userFound, setUserFound] = useState(true)
 
   useEffect(() => {
+    setUserFound(true);
     const fetchUserData = async () => {
       try {
         const response = await fetch(`http://localhost:4000/api/user/profile/${id}`);
@@ -25,6 +28,7 @@ const Settings = () => {
           setLastName(json.lastName);
           setUsername(json.username);
           setProfilePicture(json.profilePicture);
+          setUserFound(true);
         } else {
           console.error("Failed to fetch user profile");
           setUserFound(false);
@@ -44,7 +48,31 @@ const Settings = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    
+    const formData = new FormData();
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append("username", username);
+    formData.append("profilePicture", profilePicture);
+  
+    try {
+      const response = await fetch(`http://localhost:4000/api/user/profile/${user._id}`, {
+        method: 'PUT',
+        body: formData,
+      });
+  
+      const json = await response.json();
+  
+      if (response.ok) {
+        // Handle success case, such as displaying a success message
+        console.log('User profile updated successfully');
+        navigate(`/${username}/profile`); // Redirect to the user's profile page
+      } else {
+        // Handle error case
+        console.error('Failed to update user profile:', json.error);
+      }
+    } catch (error) {
+      console.error('Error updating user profile:', error.message);
+    }
   }
 
   const handleCancel = (e) => {
@@ -53,13 +81,13 @@ const Settings = () => {
     navigate(`/${user.username}/profile`);
   }
 
-  if (!userFound) {
+  if (!user || !userFound) {
     return (
       <div className="user-not-found">
         <h2>Sorry, this page isn't available.</h2>
         <p>
-          The link you followed may be broken, or the page may be removed.
-          <Link to={`/${id}/profile`}>Go back to Profile.</Link>
+          The link you followed may be broken, or the page may be removed. 
+          <Link to={`/${id}/profile`}> Go back to Profile.</Link>
         </p>
       </div>
     )
@@ -74,24 +102,40 @@ const Settings = () => {
         </div>
       </Link>
       <h1>Settings</h1>
-      <form action="">
+      <form action="" className='update-profile-form'>
         <div className="update update-pfp">
-
+          <img 
+            src={`http://localhost:4000/images/${profilePicture}`} 
+            className='update-pfp-img'
+          />
+          <span>
+            <PhotoCameraIcon />
+            <p>Change</p>
+            <input 
+              type="file"
+              onChange={(e) => setProfilePicture(e.target.files[0])}
+              name="profilePicture"
+              id='file_up'
+            />
+          </span>
         </div>
         <div className="update update-username">
           <input 
             type="text"
             value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
         <div className="update update-name">
           <input 
             type="text"
             value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
           />
           <input 
             type="text"
             value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
           />
         </div>
         <div className="update update-btns">

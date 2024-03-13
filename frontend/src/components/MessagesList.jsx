@@ -62,7 +62,7 @@ const MessagesList = () => {
           <h1>Messages</h1>
         </Link>
         <Link to={`/${user.username}/add`}>
-          <AddIcon />
+          <AddIcon fontSize="large" />
         </Link>
       </div>
       <div>
@@ -70,6 +70,7 @@ const MessagesList = () => {
           friends.map((friend, index) => (
             <div key={index} className="message-list-friend">
               <Link to={`/messages/${friend.username}`}>
+                <img src={`http://localhost:4000/${friend.pfpurl}`} alt="" className="profile-picture-xs" />
                 <h3>{friend.username}</h3>
               </Link>
             </div>

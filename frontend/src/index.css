@@ -126,10 +126,22 @@ input.error {
   align-items: center;
 }
 
+.messages-nav a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .message-list-friend {
   border-bottom: 1px solid black;
   padding: 12px 0;
   margin-bottom: 8px;
+}
+
+.message-list-friend a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 nav {
@@ -251,10 +263,16 @@ nav {
   gap: 12px;
 }
 
+.profile-picture-xs,
 .profile-picture-sm,
 .profile-picture-lg {
   border: 1px solid black;
   border-radius: 50%;
+}
+
+.profile-picture-xs {
+  height: 2rem;
+  width: 2rem;
 }
 
 .profile-picture-sm {

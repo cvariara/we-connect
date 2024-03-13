@@ -34,7 +34,7 @@ const loginUser = async (req, res) => {
   //console.log('req.file', req.file);
   
   try {
-    const profilePicture = req.file ? req.file.filename : "";
+    const profilePicture = req.file ? req.file.filename : "default.jpeg";
     const user = await User.signup(
       firstName,
       lastName,

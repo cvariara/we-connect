@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 import { RotatingLines } from "react-loader-spinner";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
@@ -16,6 +16,7 @@ const Profile = () => {
   const { logout } = useLogout();
   const { user } = useAuthContext();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -27,7 +28,7 @@ const Profile = () => {
   const handleLogout = () => {
     logout();
 
-    navigate('/messages');
+    navigate('/login');
   }
 
   const handleOpen = () => setShowFriends(true);
@@ -78,16 +79,12 @@ const Profile = () => {
     };
 
     // Ensure user.username is present before making the fetch request
-    if (user && user.username && id) {
+    if (user && user.username) {
       fetchUserData();
     }
   }, [user, id]);
   
-  useEffect(() => {
-    
-  }, [id])
-  
-  if (loading) {
+  if (!user || loading) {
     // Update to loading spinner later
     return  (
       <div className="loading">

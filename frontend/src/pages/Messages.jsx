@@ -177,7 +177,7 @@ const Messages = ({ userData }) => {
             <p>{msg.content}</p>
           </div>
         )) :
-          <p>You have no message with {receiverInfo.username}</p>
+          <p>You have no messages with {receiverInfo.username}</p>
         }
           <div ref={messagesEndRef} />
         </div>

@@ -40,7 +40,7 @@ const Login = () => {
       <p>
         New to WeConnect?
         <br />
-        <Link to="/signup">Sign up now</Link>!
+        <Link to="/signup"><strong>Sign up now</strong></Link>!
       </p>
       {error && <div className="error">{error}</div>}
     </form>

@@ -83,7 +83,7 @@ const Signup = () => {
       <p>
         Already have an account?
         <br />
-        <Link to="/login">Log in</Link>
+        <Link to="/login"><strong>Log in</strong></Link>
       </p>
       {error && <div className="error">
         {error}

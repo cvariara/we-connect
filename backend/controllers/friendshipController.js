@@ -6,6 +6,10 @@ const sendFriendRequest = async (req, res) => {
   try {
     const { senderID, receiverID } = req.body;
 
+    if (senderID === receiverID) {
+      return res.status(400).json({ error: 'Cannot add yourself' })
+    }
+
     const [sender, receiver] = await Promise.all([
       User.findOne({ username: senderID}),
       User.findOne({ username: receiverID}),
@@ -48,7 +52,7 @@ const getFriendRequest = async (req, res) => {
     }
 
     const pending = await Friendship.find({ receiver: receiver._id, status: 'pending' })
-      .populate('sender', 'firstName lastName username profilePicture');
+      .populate('sender', 'firstName lastName username profilePicture pfpurl');
     
     res.status(200).json({ pending });
   } catch (error) {
@@ -96,27 +100,14 @@ const declineFriendRequest = async (req, res) => {
   try {
     const { friendshipID } = req.params;
 
-    // find friendship
-    const friendship = await Friendship.findById(friendshipID);
+    // Find and remove the friendship by its ID
+    const deletedFriendship = await Friendship.findByIdAndDelete(friendshipID);
 
-    if (!friendship) {
-      res.status(404).json({ error: "Friendship not found" });
+    if (!deletedFriendship) {
+      return res.status(404).json({ error: "Friendship not found" });
     }
 
-    friendship.status = 'none';
-    await friendship.save();
-
-    // add each user to each other's friends list
-    const [sender, receiver] = await Promise.all([
-      User.findById(friendship.sender),
-      User.findById(friendship.receiver),
-    ]);
-
-    if (!sender || !receiver) {
-      res.status(404).json({ error: "User(s) not found" });
-    }
-
-    res.status(200).json({ friendship });
+    res.status(200).json({ message: "Friendship declined successfully" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

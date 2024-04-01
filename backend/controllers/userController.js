@@ -31,7 +31,6 @@ const loginUser = async (req, res) => {
     email,
     password
   } = req.body;
-  //console.log('req.file', req.file);
   
   try {
     const profilePicture = req.file ? req.file.filename : "default.jpeg";
@@ -72,9 +71,6 @@ const updateUser = async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, username } = req.body;
   let { profilePicture } = req.body;
-  
-  console.log('req.body', req.body);
-  console.log('req.file', req.file);
 
   let user;
   try {
@@ -92,8 +88,6 @@ const updateUser = async (req, res) => {
         { new: true }
       );
     }
-
-    console.log(user);
 
     if (!user) {
       return res.status(404).json({ error: 'No such user' });
@@ -129,33 +123,3 @@ module.exports = {
   getUsersFriends,
   updateUser
 }
-
-
-// sign-up user
-// const signupUser = async (req, res) => {
-//   const {
-//     firstName,
-//     lastName,
-//     username,
-//     email,
-//     password,
-//     profilePicture
-//   } = req.body;
-
-//   try {
-//     const user = await User.signup(
-//       firstName,
-//       lastName,
-//       username,
-//       email,
-//       password,
-//       profilePicture);
-
-//     // create a token
-//     const token = createToken(user._id);
-
-//     res.status(200).json({ username, _id: user._id, token });
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };

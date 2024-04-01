@@ -19,6 +19,6 @@ router.get('/pending-requests/:userID', getFriendRequest);
 router.post('/:friendshipID/accept', acceptFriendRequest);
 
 // deny friend request
-router.post('/:friendshipID/decline', declineFriendRequest);
+router.delete('/:friendshipID/decline', declineFriendRequest);
 
 module.exports = router;

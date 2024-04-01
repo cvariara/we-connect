@@ -119,7 +119,8 @@ const Settings = () => {
             />
           </span>
         </div>
-        <div className="update update-username">
+        <div className="update update-username form-group">
+          <label htmlFor="">Username:</label>
           <input 
             type="text"
             value={username}
@@ -127,16 +128,22 @@ const Settings = () => {
           />
         </div>
         <div className="update update-name">
-          <input 
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-          <input 
-            type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
+          <div className="form-group">
+            <label htmlFor="">First Name:</label>
+            <input 
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="">Last Name:</label>
+            <input 
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </div>
         </div>
         <div className="update update-btns">
           <button onClick={handleUpdate}>Apply</button>

@@ -11,8 +11,6 @@ export const useSignup = () => {
     setLoading(true);
     setError(null);
 
-    console.log('pfp', formData.get('profilePicture'));
-
     const response = await fetch('http://localhost:4000/api/user/signup', {
       method: "POST",
       //headers: {'Content-Type': 'multipart/form-data'},

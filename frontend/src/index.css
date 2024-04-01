@@ -21,11 +21,14 @@ li {
   list-style-type: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 .App {
   display: flex;
 }
 
-.home,
 .login,
 .signup {
   position: absolute;
@@ -36,9 +39,56 @@ li {
 }
 
 .home {
+  width: 100%;
+  height: 100%;
+}
+
+.home nav {
+  padding: 3rem 6rem;
   display: flex;
-  gap: 6rem;
-  font-size: 4rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.home h1 {
+  font-size: 28px;
+}
+
+.home .links {
+  display: flex;
+  gap: 24px;
+  font-size: 18px;
+}
+
+.home .links a:hover {
+  border-bottom: 2px solid black;
+}
+
+.home .about {
+  text-align: center;
+  margin-top: 9rem;
+  max-width: 500px;
+  width: 100%;
+  margin: 9rem auto;
+}
+
+.home .about h2 {
+  font-size: 60px;
+}
+
+.home .about p {
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+  font-size: 24px;
+}
+
+.home .about a {
+  background-color: rgb(133, 185, 229);
+  border-color: transparent;
+  border-radius: 40px;
+  padding: 1rem 2rem;
+  color: white;
+  font-size: 16px;
 }
 
 /* LOG IN & SIGN UP PAGES */
@@ -49,7 +99,6 @@ li {
   max-width: 700px;
   border-radius: 8px;
   width: 600px;
-  height: 600px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.2rem;
@@ -63,6 +112,16 @@ li {
 
 .login .form-group {
   grid-column: 1 / 3;
+}
+
+.login p,
+.signup p {
+  text-align: center;
+}
+
+.login button,
+.signup button {
+  font-size: 20px;
 }
 
 .form-group input {
@@ -175,6 +234,11 @@ nav {
   gap: 12px;
 }
 
+.messages > p {
+  text-align: center;
+  margin-top: 2rem;
+}
+
 .receiver-info {
   display: flex;
   flex-direction: column;
@@ -234,6 +298,7 @@ nav {
 
 .send-text {
   display: flex;
+  gap: 1rem;
   width: 100%;
   padding: 1rem;
 }
@@ -445,11 +510,40 @@ nav {
   opacity: 0;
 }
 
+.update input {
+  font-size: 1.5rem;
+  padding: 8px 12px;
+  border-radius: 1rem;
+  border-color: transparent;
+  background-color: rgb(194, 194, 194);
+}
+
+.update-name {
+  display: flex;
+  gap: 2rem;
+}
+
+.update-btns {
+  display: flex;
+  gap: 2rem;
+}
+
+.update-btns button {
+  width: 10rem;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
 /* FRIENDS LIST COMPONENT */
 .friends-list > div {
   display: flex;
   flex-direction: column;
   border-radius: 12px;
+  gap: 1rem;
+}
+
+.friends-list span {
+  text-align: center;
 }
 
 .friends-list-nav {
@@ -457,7 +551,6 @@ nav {
   align-items: center;
   border-bottom: 1px solid black;
   padding-bottom: 16px;
-  margin-bottom: 20px;
 }
 
 .friends-list-nav > span {
@@ -468,4 +561,58 @@ nav {
 
 .friends-list-nav > svg {
   cursor: pointer;
+}
+
+.friends-list li {
+  border-bottom: 1px solid black;
+  padding-bottom: 5px;
+}
+
+.friends-list li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.request {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.request-user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.request-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.request-buttons button {
+  border-color: transparent;
+  border-radius: 4px;
+  padding: 8px 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.request-buttons .request-accept {
+  background-color: rgb(26, 131, 217);
+}
+
+.request-buttons .request-decline {
+  background-color: rgb(70, 70, 70);
+}
+
+/* ADD USER */
+.add-user-form input {
+  font-size: 1.5rem;
+  padding: 8px 12px;
+  border-radius: 1rem;
+  border-color: transparent;
+  background-color: rgb(194, 194, 194);
 }

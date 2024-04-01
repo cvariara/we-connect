@@ -39,6 +39,23 @@ const Requests = ({ setShowRequests }) => {
     }
   }
 
+  const handleDenyRequest = async (friendID) => {
+    try {
+      const response = await fetch(`http://localhost:4000/api/friendship/${friendID}/decline`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        setShowRequests(false);
+        console.log('Friend Declined!');
+      } else {
+        console.error('Failed to deny friend request');
+      }
+    } catch (error) {
+      console.error('Error denying friend request');
+    }
+  }
+
   useEffect(() => {
     const fetchFriends = async () => {
       try {
@@ -72,9 +89,15 @@ const Requests = ({ setShowRequests }) => {
           <CloseIcon onClick={() => setShowRequests(false)} />
         </div>
         {requests.length > 0 ? requests.map(request => (
-          <li key={request._id}>
-            {request.sender.firstName} {request.sender.lastName} - {request.sender.username}
-            <button onClick={() => handleAcceptingRequest(request._id)}>Accept</button>
+          <li key={request._id} className="request">
+            <div className="request-user-info">
+              <img src={`http://localhost:4000/${request.sender.pfpurl}`} alt="" className="profile-picture-xs" />
+              <span>{request.sender.username}</span>
+            </div>
+            <div className="request-buttons">
+              <button className="request-accept" onClick={() => handleAcceptingRequest(request._id)}>Accept</button>
+              <button className="request-decline" onClick={() => handleDenyRequest(request._id)}>Delete</button>
+            </div>
           </li> 
         )) : 
         <span>You have no friend requests.</span>

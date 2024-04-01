@@ -156,9 +156,6 @@ const Messages = ({ userData }) => {
     )
   }
 
-  console.log('info')
-  console.log(receiverInfo.username)
-
   return (
     <div className="messages-container">
       <Navbar userData={userData} />

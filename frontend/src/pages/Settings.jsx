@@ -61,9 +61,11 @@ const Settings = () => {
       });
   
       const json = await response.json();
+      console.log('json', json);
   
       if (response.ok) {
-        // Handle success case, such as displaying a success message
+        const updatedUser = { ...user, username: json.username };
+        localStorage.setItem('user', JSON.stringify(updatedUser));
         console.log('User profile updated successfully');
         navigate(`/${username}/profile`); // Redirect to the user's profile page
       } else {

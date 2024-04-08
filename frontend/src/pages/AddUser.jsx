@@ -61,7 +61,7 @@ const AddUser = () => {
           id=""
           placeholder="Enter username..."
           value={friendUsername}
-          onChange={(e) => setFriendUsername(e.target.value.toLowerCase())}
+          onChange={(e) => setFriendUsername(e.target.value)}
         />
         <button onClick={handleClick}>Add</button>
       </form>

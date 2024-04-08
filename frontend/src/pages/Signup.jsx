@@ -23,7 +23,6 @@ const Signup = () => {
     formData.append("profilePicture", profilePicture);
 
     await signup(formData);
-    //await signup(firstName, lastName, username, email, password, profilePicture);
   }
 
   return (

@@ -7,10 +7,12 @@ const AddUser = () => {
   const { id } = useParams();
   const [friendUsername, setFriendUsername] = useState('');
   const [error, setError] = useState(null);
+  const [sent, setSent] = useState(null);
 
   const handleClick = async (e) => {
     e.preventDefault();
     setError(null);
+    setSent(null);
 
     try {
       const response = await fetch(`http://localhost:4000/api/friendship/send`, {
@@ -28,6 +30,7 @@ const AddUser = () => {
 
       if (response.ok) {
         console.log('Friend req sent!')
+        setSent("Friend request sent!")
       }
 
       if (!response.ok) {
@@ -68,6 +71,9 @@ const AddUser = () => {
       {error && <div className="error">
         {error}
       </div>}
+      {sent && <div className="error">
+        {sent}
+      </div> }
     </div>
   )
 };

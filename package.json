@@ -1,0 +1,18 @@
+{
+  "name": "we-connect",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+      "install-server": "cd backend && npm install",
+      "start-server": "cd backend && npm run start",
+      "install-client": "cd frontend && npm install",
+      "build-client": "cd frontend && npm run dev",
+      "start-client": "cd frontend && npm run build",
+      "install-socket": "cd socket && npm install",
+      "start-socket": "cd socket && npm run start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -41,7 +41,7 @@ const Profile = () => {
   const handleAddFriend = async () => {
     try {
       const response = await fetch(
-        `http://localhost:4000/api/friendship/send`,
+        `/api/friendship/send`,
         {
           method: "POST",
           headers: {
@@ -162,7 +162,7 @@ const Profile = () => {
         </Link>
       )}
       <img
-        src={`http://localhost:4000/${userData.pfpurl}`}
+        src={`https://we-connect-gf8s.onrender.com/${userData.pfpurl}`}
         className="profile-picture-lg"
       />
       <div className="profile-user-info">

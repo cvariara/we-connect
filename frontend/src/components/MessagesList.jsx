@@ -70,7 +70,7 @@ const MessagesList = () => {
           friends.map((friend, index) => (
             <div key={index} className="message-list-friend">
               <Link to={`/messages/${friend.username}`}>
-                <img src={`/${friend.pfpurl}`} alt="" className="profile-picture-xs" />
+                <img src={`https://we-connect-gf8s.onrender.com/${friend.pfpurl}`} alt="" className="profile-picture-xs" />
                 <h3>{friend.username}</h3>
               </Link>
             </div>

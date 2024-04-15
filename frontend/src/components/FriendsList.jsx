@@ -57,7 +57,7 @@ const FriendsList = ({ setShowFriends }) => {
         {friends.map(friend => (
           <li key={friend._id}>
             <Link to={`/${friend.username}/profile`} onClick={() => setShowFriends(false)}>
-              <img src={`http://localhost:4000/${friend.pfpurl}`} alt="" className="profile-picture-xs" />
+              <img src={`https://we-connect-gf8s.onrender.com/${friend.pfpurl}`} alt="" className="profile-picture-xs" />
               <span>{friend.username}</span>
             </Link>
           </li>

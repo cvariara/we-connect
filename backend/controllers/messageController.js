@@ -1,5 +1,5 @@
-const Message = require('../models/messageModel.js');
-const User = require('../models/UserModel.js');
+const Message = require('../models/messageModel');
+const User = require('../models/userModel');
 
 const io = require('../server').io;
 

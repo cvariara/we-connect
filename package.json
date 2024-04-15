@@ -10,7 +10,11 @@
       "build-client": "cd frontend && npm run dev",
       "start-client": "cd frontend && npm run build",
       "install-socket": "cd socket && npm install",
-      "start-socket": "cd socket && npm run start"
+      "start-socket": "cd socket && npm run start",
+
+      "server": "nodemon backend/server.js",
+      "start": "node backend/server.js",
+      "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "",

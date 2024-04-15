@@ -66,7 +66,7 @@ const Profile = () => {
     const fetchUserData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/api/user/profile/${id}`
+          `/api/user/profile/${id}`
         );
         const json = await response.json();
 
@@ -94,7 +94,7 @@ const Profile = () => {
     const fetchFriends = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/api/friendship/pending-requests/${id}`
+          `/api/friendship/pending-requests/${id}`
         );
         const json = await response.json();
 

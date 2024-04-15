@@ -12,7 +12,7 @@ const MessagesList = () => {
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/user/profile/${user.username}/friends`, {
+        const response = await fetch(`/api/user/profile/${user.username}/friends`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ const MessagesList = () => {
           friends.map((friend, index) => (
             <div key={index} className="message-list-friend">
               <Link to={`/messages/${friend.username}`}>
-                <img src={`http://localhost:4000/${friend.pfpurl}`} alt="" className="profile-picture-xs" />
+                <img src={`/${friend.pfpurl}`} alt="" className="profile-picture-xs" />
                 <h3>{friend.username}</h3>
               </Link>
             </div>

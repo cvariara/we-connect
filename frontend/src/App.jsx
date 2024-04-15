@@ -25,7 +25,7 @@ function App() {
     const fetchUserData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:4000/api/user/profile/${user.username}`);
+        const response = await fetch(`/api/user/profile/${user.username}`);
         const json = await response.json();
 
         if (response.ok) {

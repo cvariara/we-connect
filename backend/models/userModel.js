@@ -23,7 +23,7 @@ userSchema.virtual('fullName').get(function() {
 });
 
 userSchema.virtual('pfpurl').get(function() {
-  return `/images/${this.profilePicture}`;
+  return `images/${this.profilePicture}`;
 });
 
 // static signup method

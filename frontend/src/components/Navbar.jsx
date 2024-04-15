@@ -10,7 +10,7 @@ const Navbar = ({ userData }) => {
     logout();
   }
 
-  console.log(userData.pfpurl)
+  console.log(userData)
 
   return (
     <header>

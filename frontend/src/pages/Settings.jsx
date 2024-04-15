@@ -19,7 +19,7 @@ const Settings = () => {
     setUserFound(true);
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/user/profile/${id}`);
+        const response = await fetch(`/api/user/profile/${id}`);
         const json = await response.json();
 
         if (response.ok) {
@@ -55,7 +55,7 @@ const Settings = () => {
     formData.append("profilePicture", profilePicture);
   
     try {
-      const response = await fetch(`http://localhost:4000/api/user/profile/${user._id}`, {
+      const response = await fetch(`/api/user/profile/${user._id}`, {
         method: 'PUT',
         body: formData,
       });

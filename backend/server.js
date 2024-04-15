@@ -10,8 +10,11 @@ const messageRoutes = require('./routes/messages');
 const userRoutes = require('./routes/user');
 const friendshipRoutes = require('./routes/friendship');
 
+//import { app, server } from "./socket/socket.js";
+const {app, server} = require('./socket/socket.js')
+
 // express app
-const app = express();
+//const app = express();
 
 const PORT = process.env.PORT || 4000;
 
@@ -30,12 +33,15 @@ app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
-app.use(express.static('public/'));
+//app.use(express.static('public/'));
 
 // routes
 app.use('/api/messages', messageRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/friendship', friendshipRoutes);
+
+// Serve static files from 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.static(path.join(___dirname, "/frontend/dist")));
 
@@ -47,7 +53,7 @@ app.get("*", (req, res) => {
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     // listen for requests
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log('Connected to DB');
       console.log(`Listening on port ${PORT}!`);
     });

@@ -18,7 +18,7 @@ const Messages = ({ userData }) => {
   const socket = useRef();
 
   useEffect(() => {
-    socket.current = io("ws://localhost:8900");
+    socket.current = io("https://we-connect-gf8s.onrender.com");
 
     socket.current.on("getMessage", data => {
       setArrivalMessage({
@@ -46,7 +46,7 @@ const Messages = ({ userData }) => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/messages/${receiverID}?senderID=${userData._id}`, {
+        const response = await fetch(`/api/messages/${receiverID}?senderID=${userData._id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ const Messages = ({ userData }) => {
   useEffect(() => {
     const fetchReceiverInfo = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/user/profile/${receiverID}`);
+        const response = await fetch(`/api/user/profile/${receiverID}`);
         const json = await response.json();
 
         if (response.ok) {
@@ -110,7 +110,7 @@ const Messages = ({ userData }) => {
     });
     
     try {
-      const response = await fetch(`http://localhost:4000/api/messages/${receiverID}`, {
+      const response = await fetch(`/api/messages/${receiverID}`, {
         method: 'POST',
         body: JSON.stringify({
           senderID: userData._id,

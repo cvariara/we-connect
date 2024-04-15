@@ -15,7 +15,7 @@ const AddUser = () => {
     setSent(null);
 
     try {
-      const response = await fetch(`http://localhost:4000/api/friendship/send`, {
+      const response = await fetch(`/api/friendship/send`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

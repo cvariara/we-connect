@@ -11,7 +11,7 @@ export const useSignup = () => {
     setLoading(true);
     setError(null);
 
-    const response = await fetch('http://localhost:4000/api/user/signup', {
+    const response = await fetch('/api/user/signup', {
       method: "POST",
       //headers: {'Content-Type': 'multipart/form-data'},
       //headers: {'Content-Type': 'application/json'},

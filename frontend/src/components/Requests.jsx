@@ -24,7 +24,7 @@ const Requests = ({ setShowRequests }) => {
 
   const handleAcceptingRequest = async (friendID) => {
     try {
-      const response = await fetch(`http://localhost:4000/api/friendship/${friendID}/accept`, {
+      const response = await fetch(`/api/friendship/${friendID}/accept`, {
         method: 'POST'
       });
 
@@ -41,7 +41,7 @@ const Requests = ({ setShowRequests }) => {
 
   const handleDenyRequest = async (friendID) => {
     try {
-      const response = await fetch(`http://localhost:4000/api/friendship/${friendID}/decline`, {
+      const response = await fetch(`/api/friendship/${friendID}/decline`, {
         method: 'DELETE'
       });
 
@@ -59,7 +59,7 @@ const Requests = ({ setShowRequests }) => {
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/friendship/pending-requests/${id}`);
+        const response = await fetch(`/api/friendship/pending-requests/${id}`);
         const json = await response.json();
 
         if (response.ok) {

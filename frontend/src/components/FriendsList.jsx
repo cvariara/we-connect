@@ -25,7 +25,7 @@ const FriendsList = ({ setShowFriends }) => {
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/user/profile/${id}/friends`);
+        const response = await fetch(`/api/user/profile/${id}/friends`);
         const json = await response.json();
 
         if (response.ok) {

@@ -91,7 +91,7 @@ const Requests = ({ setShowRequests }) => {
         {requests.length > 0 ? requests.map(request => (
           <li key={request._id} className="request">
             <div className="request-user-info">
-              <img src={`http://localhost:4000/${request.sender.pfpurl}`} alt="" className="profile-picture-xs" />
+              <img src={`https://we-connect-gf8s.onrender.com/${request.sender.pfpurl}`} alt="" className="profile-picture-xs" />
               <span>{request.sender.username}</span>
             </div>
             <div className="request-buttons">

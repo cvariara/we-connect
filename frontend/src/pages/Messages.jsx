@@ -162,7 +162,7 @@ const Messages = ({ userData }) => {
       <div className="message-container">
         <div className="">
           <Link to={`/${receiverInfo.username}/profile`} className="receiver-info">
-            <img className="profile-picture-sm" src={`http://localhost:4000/${receiverInfo.pfpurl}`} alt="" />
+            <img className="profile-picture-sm" src={`https://we-connect-gf8s.onrender.com/${receiverInfo.pfpurl}`} alt="" />
             <h5>{receiverInfo.fullName}</h5>
           </Link>
         </div>

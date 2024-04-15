@@ -18,7 +18,7 @@ const Navbar = ({ userData }) => {
         <nav>
           <div className="profile-link">
             <Link to={`/${userData.username}/profile`}>
-              <img className="profile-picture-sm" src={`http://localhost:4000/${userData.pfpurl}`} alt="" />
+              <img className="profile-picture-sm" src={`https://we-connect-gf8s.onrender.com/${userData.pfpurl}`} alt="" />
               <span>@{userData.username}</span>
             </Link>
           </div>

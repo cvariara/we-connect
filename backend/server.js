@@ -13,7 +13,7 @@ const friendshipRoutes = require('./routes/friendship');
 // express app
 const app = express();
 
-const __dirname = path.resolve();
+const ___dirname = path.resolve();
 
 // middleware
 //app.use(cors({origin: "http://localhost:5173"}));
@@ -32,10 +32,10 @@ app.use('/api/messages', messageRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/friendship', friendshipRoutes);
 
-app.use(express.static(__dirname, "/frontend/dist"))
+app.use(express.static(___dirname, "/frontend/dist"))
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"))
+  res.sendFile(path.join(___dirname, "frontend", "dist", "index.html"))
 })
 
 // connect to db

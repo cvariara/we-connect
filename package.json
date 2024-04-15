@@ -2,21 +2,25 @@
   "name": "we-connect",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-      "install-server": "cd backend && npm install",
-      "start-server": "cd backend && npm run start",
-      "install-client": "cd frontend && npm install",
-      "build-client": "cd frontend && npm run dev",
-      "start-client": "cd frontend && npm run build",
-      "install-socket": "cd socket && npm install",
-      "start-socket": "cd socket && npm run start",
-
       "server": "nodemon backend/server.js",
       "start": "node backend/server.js",
       "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.2",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.1.0",
+    "multer": "^1.4.5-lts.1",
+    "socket.io": "^4.7.4",
+    "validator": "^13.11.0"
+  }
 }

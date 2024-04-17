@@ -107,7 +107,7 @@ const Settings = () => {
       <form action="" className='update-profile-form'>
         <div className="update update-pfp">
           <img 
-            src={`https://we-connect-gf8s.onrender.com/${profilePicture}`} 
+            src={`https://we-connect-gf8s.onrender.com/images/${profilePicture}`} 
             className='update-pfp-img'
           />
           <span>

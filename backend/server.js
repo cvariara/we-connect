@@ -5,16 +5,10 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 
-const messageController = require('./controllers/messageController');
 const messageRoutes = require('./routes/messages');
 const userRoutes = require('./routes/user');
 const friendshipRoutes = require('./routes/friendship');
-
-//import { app, server } from "./socket/socket.js";
-const {app, server} = require('./socket/socket.js')
-
-// express app
-//const app = express();
+const { app, server } = require('./socket/socket.js')
 
 const PORT = process.env.PORT || 4000;
 
@@ -22,18 +16,12 @@ const ___dirname = path.resolve();
 
 dotenv.config();
 
-// middleware
-//app.use(cors({origin: "http://localhost:5173"}));
-
-
-
 app.use(express.json());
 app.use(cors());
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
-//app.use(express.static('public/'));
 
 // routes
 app.use('/api/messages', messageRoutes);

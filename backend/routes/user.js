@@ -1,29 +1,45 @@
 const express = require('express');
 const multer = require('multer');
+const path = require('path');
 
 // Multer configuration for storing files
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public/images');
+    cb(null, path.join(__dirname, '../../backend/public/images'));
+    // Change the path to go up two levels to reach the correct directory
   },
   filename: function (req, file, cb) {
-    const fileExtention = file.originalname.split('.')[1];
-    const fileName = `${Math.round(Math.random() * 1E9)}.${fileExtention}`;
+    const fileExtension = file.originalname.split('.').pop();
+    const fileName = `${Math.round(Math.random() * 1E9)}.${fileExtension}`;
     cb(null, fileName);
   }
 });
 
-const upload = multer({storage:storage,fileFilter: (req, file, cb) => {
-  if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
-    cb(null, true);
-  } else {
-    cb(null, false);
-    return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
-  }
-}, limits: { fileSize: 2000000 }}); // limit image upload to 2MB
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    if (
+      file.mimetype === 'image/png' ||
+      file.mimetype === 'image/jpg' ||
+      file.mimetype === 'image/jpeg'
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      return cb(new Error('Only .png, .jpg, and .jpeg formats are allowed!'));
+    }
+  },
+  limits: { fileSize: 2000000 } // Limit image upload to 2MB
+});
 
-// controllers
-const { loginUser, signupUser, getUser, getUsersFriends, updateUser } = require('../controllers/userController');
+// Import controllers
+const {
+  loginUser,
+  signupUser,
+  getUser,
+  getUsersFriends,
+  updateUser
+} = require('../controllers/userController');
 
 const router = express.Router();
 

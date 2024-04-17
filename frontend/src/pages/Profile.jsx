@@ -145,7 +145,7 @@ const Profile = () => {
     );
   }
 
-  //console.log('userdata', userData);
+  console.log('userdata', userData);
   return (
     <div className="profile-container">
       <Link to="/messages">

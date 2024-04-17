@@ -138,7 +138,7 @@ const Messages = ({ userData }) => {
     }
   }
 
-  if (loading) {
+  if (loading || !receiverInfo.username) {
     return  (
       <div className="loading">
         <RotatingLines
